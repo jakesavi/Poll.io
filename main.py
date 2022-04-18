@@ -1,5 +1,7 @@
 import discord
-from secret import token
+
+from secret import *
+
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -15,6 +17,6 @@ async def on_message(message):
         return
 
     if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-
+        await message.channel.send('Hi I\'m a bot! Beep Boop!')
+        print(message.author)
 client.run(token())
