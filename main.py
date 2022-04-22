@@ -1,3 +1,5 @@
+from email.headerregistry import MessageIDHeader
+from anyio import sleep_forever
 import discord
 
 from secret import *
@@ -16,7 +18,14 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hi I\'m a bot! Beep Boop!')
-        print(message.author)
+    if message.content.startswith('$create'):
+        original_channel = message.channel
+        dmchannel = await client.create_dm(message.author)
+        await dmchannel.send("You wish to create a poll?")
+        await dmchannel.send("Text me a name for the poll using $name /{Name of Poll/}")
+        if message.content.startswith('$name'):
+            pollName = message.content.replace("$name","")
+            await original_channel.send(str(message.author)+ " has created a poll named: " + pollName)
+            return
+            
 client.run(token())
