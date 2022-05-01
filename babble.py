@@ -3,7 +3,7 @@ import random
 import csv
 letters=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','x','t','u','v','w','x','y','z']
 def babble():
-    with open("Poll.io/dictionary.csv",'r+') as csvfile:
+    with open("dictionary.csv",'r+') as csvfile:
         reader = csv.reader(csvfile)
         desired = random.randrange(0,54555)
         count = 0
@@ -13,8 +13,5 @@ def babble():
             else:
                 count= count + 1 
 def coinflip():
-    flip = random.random()
-    if flip >= .5:
-        return 1
-    else:
-        return 0
+    flip = random.randrange(0,1)
+    return flip

@@ -27,10 +27,12 @@ async def on_message(message):
         return
     if message.content.startswith('$flip'):
         await message.channel.send("You cast flip!")
-        if(coinflip()):
+        if(coinflip()==1):
             await message.channel.send("You landed Heads!")
+            return
         else:
             await message.channel.sent("You landed Tails!")
+            return
 client.run(token())
 """if message.content.startswith('$create'):
         original_channel = message.channel
