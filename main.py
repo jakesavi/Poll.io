@@ -1,4 +1,3 @@
-from black import main
 import discord
 from babble import babble, coinflip
 from secret import *
@@ -27,11 +26,11 @@ async def on_message(message):
         return
     if message.content.startswith('$flip'):
         await message.channel.send("You cast flip!")
-        if(coinflip()==1):
+        if(coinflip()):
             await message.channel.send("You landed Heads!")
             return
         else:
-            await message.channel.sent("You landed Tails!")
+            await message.channel.send("You landed Tails!")
             return
 client.run(token())
 """if message.content.startswith('$create'):

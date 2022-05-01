@@ -13,5 +13,8 @@ def babble():
             else:
                 count= count + 1 
 def coinflip():
-    flip = random.randrange(0,1)
-    return flip
+    flip = random.randrange(0,100)
+    if flip >50:
+        return True
+    else:
+        return False
