@@ -1,6 +1,6 @@
 from black import main
 import discord
-from babble import babble
+from babble import babble, coinflip
 from secret import *
 
 intents = discord.Intents.default()
@@ -25,7 +25,12 @@ async def on_message(message):
         await message.channel.send("Your randomly generated word is: "+ listOfBabble[0])
         await message.channel.send("Its definition is: " + listOfBabble[2])
         return
-            
+    if message.content.startswith('$flip'):
+        await message.channel.send("You cast flip!")
+        if(coinflip()):
+            await message.channel.send("You landed Heads!")
+        else:
+            await message.channel.sent("You landed Tails!")
 client.run(token())
 """if message.content.startswith('$create'):
         original_channel = message.channel

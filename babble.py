@@ -12,3 +12,9 @@ def babble():
                 return i
             else:
                 count= count + 1 
+def coinflip():
+    flip = random.random()
+    if flip >= .5:
+        return 1
+    else:
+        return 0
