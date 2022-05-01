@@ -1,7 +1,5 @@
-from email.headerregistry import MessageIDHeader
-from anyio import sleep_forever
 import discord
-
+from babble import babble
 from secret import *
 
 intents = discord.Intents.default()
@@ -18,7 +16,17 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('$create'):
+    
+    
+    if message.content.startswith('$babble'):
+        listOfBabble = babble()
+        await message.channel.send("You cast babble!")
+        await message.channel.send("Your randomly generated word is: "+ listOfBabble[0])
+        await message.channel.send("Its definition is: " + listOfBabble[2])
+        return
+            
+client.run(token())
+"""if message.content.startswith('$create'):
         original_channel = message.channel
         dmchannel = await client.create_dm(message.author)
         await dmchannel.send("You wish to create a poll?")
@@ -26,6 +34,4 @@ async def on_message(message):
         if message.content.startswith('$name'):
             pollName = message.content.replace("$name","")
             await original_channel.send(str(message.author)+ " has created a poll named: " + pollName)
-            return
-            
-client.run(token())
+            return"""
