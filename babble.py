@@ -12,6 +12,3 @@ def babble():
                 return i
             else:
                 count= count + 1 
-
-        
-print(babble())

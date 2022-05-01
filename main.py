@@ -1,3 +1,4 @@
+from black import main
 import discord
 from babble import babble
 from secret import *
