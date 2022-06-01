@@ -33,12 +33,3 @@ async def on_message(message):
             await message.channel.send("You landed Tails!")
             return
 client.run(token())
-"""if message.content.startswith('$create'):
-        original_channel = message.channel
-        dmchannel = await client.create_dm(message.author)
-        await dmchannel.send("You wish to create a poll?")
-        await dmchannel.send("Text me a name for the poll using $name /{Name of Poll/}")
-        if message.content.startswith('$name'):
-            pollName = message.content.replace("$name","")
-            await original_channel.send(str(message.author)+ " has created a poll named: " + pollName)
-            return"""
