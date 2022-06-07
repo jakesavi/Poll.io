@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 # Secret Token
 secret.py
+#venv
+pollio-env/
