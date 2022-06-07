@@ -1,5 +1,4 @@
 import json
-from pydoc import cli
 import discord
 from babble import babble, coinflip
 from secret import *
@@ -52,6 +51,7 @@ async def on_message(message):
         await message.channel.send("Ok now tell me the options seperated by ',' If there are no comma's there will only be one option! ALSO DON'T PUT A SPACE BETWEEN OPTIONS PLEASE!")
         pollOptions = await client.wait_for('message',check=match_user, timeout = 200.0)
         pollOptionsArray = pollOptions.content.split(',')
-        pollEvents.makePoll(pollTitle, pollOptionsArray)
+        await message.channel.send(pollEvents.makePoll(pollTitle, pollOptionsArray))
+        
   #This should be the last thing executed as this launches the bot.  
 client.run(token())

@@ -16,15 +16,14 @@ def makePoll(pollName, arrayOfOptions):
         
     PollCreation = {"title": pollName.content,
     "poll_options":listOfOptionDictionary, 
-    "type":"ranked_choice",
+    "type":"multiple_choice",
     "poll_config": {
-        "is_private":False,
+        "is_private":True,
         "vote_type":"default",
         "allowed_comments":False,
         "allow_indeterminate":False,
         "allow_other_option": False,
 		"custom_design_colors": None,
-		"deadline_at": None,
 		"duplication_checking": "ip",
 		"allow_vpn_users": False,
 		"edit_vote_permissions": "nobody",
@@ -34,14 +33,10 @@ def makePoll(pollName, arrayOfOptions):
 		"multiple_choice_min": None,
 		"multiple_choice_max": None,
 		"number_of_winners": 1,
-		"randomize_options": False,
-		"require_voter_names": False,
-		"results_visibility": "always",
-		"use_custom_design": False
     }}
 #Above is the json object. Most of it is taken directly from the github of strawpoll!
 
-    
-    dataBack = requests.post(url=PollAPI,json=makePoll,headers={'X-API-KEY': xapiKey})
-    print(dataBack.json)
+    data = json.loads(json.JSONEncoder().encode(PollCreation)) 
+    dataBack = requests.post(url=PollAPI,json=data,headers={'X-API-KEY': xapiKey})
+    return dataBack.json()["url"]
     
