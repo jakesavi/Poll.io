@@ -38,5 +38,5 @@ def makePoll(pollName, arrayOfOptions):
 
     data = json.loads(json.JSONEncoder().encode(PollCreation)) 
     dataBack = requests.post(url=PollAPI,json=data,headers={'X-API-KEY': xapiKey})
-    return dataBack.json()["url"]
+    return dataBack.json()
     
