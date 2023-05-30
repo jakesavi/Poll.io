@@ -1,7 +1,6 @@
 import discord
 from babble import *
 from secret import *
-import pollEvents
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -38,17 +37,28 @@ async def on_message(message):
             await message.channel.send("You landed Tails!")
             return
 
-# TODO FIX the parsing with $roll
     if message.content.startswith("$roll "):
-        if(len(message.content)) > 5 and 'd' in message.content:
-            rolls = roll(int(message.content[6]),int(message.content[8]))
-            for j in rolls:
-                await message.channel.send(j)
-            await message.channel.send("Your total is: " + str(sum(rolls)))
-
-
-        else:
-            await message.channel.send("Incorrect Syntax")
-
+        if (len(message.content) <= 6):
+            return message.channel.send("Invalid len of string")
+        
+        split = message.content[6:]
+        count = 6
+        for i in split:
+            if i == 'd' or i == 'D':
+                break
+            else:
+                count +=1
+        numberOfDie = int(message.content[6:count])
+        count +=1 
+        split : str = message.content[count:]
+        count = 0
+        for i in split:
+            if i == ' ':
+                break
+            else:
+                count +=1
+        numberOfSides: str = int(split[:count])
+        listOfRolls = roll(numberOfDie, numberOfSides)
+        await message.channel.send("You rolled: " + str(listOfRolls) + "\nThe sum being: " + str(sum(listOfRolls)))
 #This should be the last thing executed as this launches the bot.
 client.run(token())
