@@ -1,64 +1,33 @@
 import discord
-from babble import *
+from discord.ext import commands
 from secret import *
+from babble import *
+import random
+
+description = ''' A small bot project'''
 
 intents = discord.Intents.default()
+intents.members = True
 intents.message_content = True
+bot = commands.Bot(command_prefix='$', description=description, intents= intents)
 
-client = discord.Client(intents=intents)
-
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
-    
-@client.event
-async def on_message(message):
-    if message.author == client.user: # Ignore self function
+@bot.command()
+async def roll(ctx, *dice:str):
+    try:
+        rolls, limit = map(int, dice.split('d'))
+    except Exception:
+        await ctx.send("Format must be in #d#")
         return
+    results =', '.join(str(random.randint(1,limit)) for r in range(rolls))
+    listres: list[str] = (results.split(", "))
+    sum = 0 
+    for i in listres:
+        sum += int(i)
+    await ctx.send("Rolled: "+results + " with a sum of: " + str(sum))
 
+@bot.command()
+async def babble(ctx):
+    listOfBabble = babbleExt()
+    await ctx.send("You cast babble! Your word is " + listOfBabble[0] + " with definition: " + listOfBabble[2])
 
-    # Each of these sections are different "Functions" to pollio message commands.
-    # I am unsure if there is a better way to do this
-    
-    # Random word search
-    if message.content.startswith('$babble'):
-        listOfBabble = babble()
-        await message.channel.send("You cast babble!")
-        await message.channel.send("Your randomly generated word is: "+ listOfBabble[0])
-        await message.channel.send("Its definition is: " + listOfBabble[2])
-        return
-    # CoinFlipper
-    if message.content.startswith('$flip'):
-        await message.channel.send("You cast flip!")
-        if(coinflip()):
-            await message.channel.send("You landed Heads!")
-            return
-        else:
-            await message.channel.send("You landed Tails!")
-            return
-
-    if message.content.startswith("$roll "):
-        if (len(message.content) <= 6):
-            return message.channel.send("Invalid len of string")
-        
-        split = message.content[6:]
-        count = 6
-        for i in split:
-            if i == 'd' or i == 'D':
-                break
-            else:
-                count +=1
-        numberOfDie = int(message.content[6:count])
-        count +=1 
-        split : str = message.content[count:]
-        count = 0
-        for i in split:
-            if i == ' ':
-                break
-            else:
-                count +=1
-        numberOfSides: str = int(split[:count])
-        listOfRolls = roll(numberOfDie, numberOfSides)
-        await message.channel.send("You rolled: " + str(listOfRolls) + "\nThe sum being: " + str(sum(listOfRolls)))
-#This should be the last thing executed as this launches the bot.
-client.run(token())
+bot.run(token())
